@@ -1,0 +1,59 @@
+前端向后端传递参数的方式:
+1.从路径中使用正则传参
+2.路径传参,查询字符串(query string) 不限制请求方式,get能传,其他方式也能传
+3.从请求头中传递参数
+4.cookie
+5.请求体参数
+    图片/文件  --> 多媒体表单
+    字符串  --> 普通表单
+    关于字符串的格式:
+        普通表单格式  "a=1&b=2"
+        json格式(类似于字典的字符串格式)  '{"a":1, "b":2}'
+        xml格式,如:
+            """
+            <xml>
+                <a>1</a>
+                <b>2</b>
+            </xml>
+            """
+
+2.raw 原始
+3.json字符串在python中的处理
+    json字符串 --> python中的字典  json.loads(json字符串)
+    python中的字典 --> json字符串  json.dumps(python中的字典)
+
+4.如何获取json字符串参数:
+    第一种方式:json_str = request.data   然后通过json.loads(json_str)转换为字典
+    第二种方式:flask提供的获取json数据的简便方法: get_json
+        前提条件:要求请求头Content_Type必须指明是application/json
+        get_json会将请求体中的json字符串直接转换为字典返回给我们
+
+5.python2与python3字符串的区别
+python3 类型 str
+python2 类型 str unicode
+
+6.能包含请求体的请求方式: POST/PUT/DELETE
+
+7.flask后端接收文件参数并保存的方法
+    第一种方式:自己手动保存
+        file_obj = request.files.get(key值) --> 获取文件对象
+        file_data = file_obj.read() --> 获取文件数据
+        然后通过文件的读写操作:
+         with open(文件名, 文件打开方式) as f:
+            f.write(file_data)
+    第二种方式:使用flask封装的save方法保存
+        file_obj = request.files.get(key值) --> 获取文件对象
+        file_obj.save(文件名)
+
+8.flask中使用session需要配置secret_key参数
+9.没有了cookie,session也可以实现,例如可以将session_id放在url请求路径中
+
+
+数据表
+1 user_info ---> 用户
+2 house_info ---> 房屋
+3 house_image
+4 facility
+5 house_facility
+6 area_info ---> 城区表
+7 order_info ---> 订单
